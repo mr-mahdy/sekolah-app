@@ -80,13 +80,13 @@
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="./index.html" class="nav-link">
+                             <a href="<?= base_url('mapel/index'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Mata Pelajaran</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="<?= base_url('admin/loadKelas'); ?>" class="nav-link">
+                             <a href="<?= base_url('kelas/index'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Kelas</p>
                              </a>

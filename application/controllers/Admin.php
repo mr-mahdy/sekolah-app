@@ -7,6 +7,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model('Mapel_model');
     }
 
     public function index()
@@ -22,6 +23,7 @@ class Admin extends CI_Controller
             redirect('auth');
         }
     }
+
 
     public function loadKelas()
     {

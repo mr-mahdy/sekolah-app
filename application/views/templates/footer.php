@@ -44,6 +44,12 @@
 <script src="<?= base_url(); ?>assets/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url(); ?>assets/dist/js/demo.js"></script>
+<script>
+    <?php if ($this->session->flashdata('message')) : ?>
+        $('#mapelModal').modal('show');
+        $('#kelasModal').modal('show');
+    <?php endif; ?>
+</script>
 </body>
 
 </html>
