@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2020 at 08:16 AM
+-- Generation Time: Feb 23, 2020 at 02:56 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,6 +21,73 @@ SET time_zone = "+00:00";
 --
 -- Database: `sekolah_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guru`
+--
+
+CREATE TABLE `guru` (
+  `id` int(11) NOT NULL,
+  `nuptk` varchar(64) NOT NULL,
+  `nama_guru` varchar(255) NOT NULL,
+  `id_mapel` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `guru`
+--
+
+INSERT INTO `guru` (`id`, `nuptk`, `nama_guru`, `id_mapel`) VALUES
+(1, '1730', 'Lutfi', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kelas`
+--
+
+CREATE TABLE `kelas` (
+  `id` int(11) NOT NULL,
+  `nama_kelas` varchar(64) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id`, `nama_kelas`, `jumlah`) VALUES
+(1, 'X-A', 20),
+(2, 'X-B', 30),
+(3, 'X-C', 35),
+(4, 'X-D', 30),
+(5, 'XI-IPA-A', 32);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapel`
+--
+
+CREATE TABLE `mapel` (
+  `id` int(11) NOT NULL,
+  `kode_mapel` varchar(10) NOT NULL,
+  `nama_mapel` varchar(128) NOT NULL,
+  `kkm` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mapel`
+--
+
+INSERT INTO `mapel` (`id`, `kode_mapel`, `nama_mapel`, `kkm`) VALUES
+(1, 'MP-001', 'Matematika', 60),
+(2, 'MP-002', 'IPA', 70),
+(3, 'MP-003', 'IPS', 70),
+(6, 'MP-004', 'Bahasa Indonesia', 75),
+(7, 'MP-005', 'PPKN', 70);
 
 -- --------------------------------------------------------
 
@@ -72,6 +139,24 @@ INSERT INTO `user_role` (`id`, `role`) VALUES
 --
 
 --
+-- Indexes for table `guru`
+--
+ALTER TABLE `guru`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kelas`
+--
+ALTER TABLE `kelas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mapel`
+--
+ALTER TABLE `mapel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -86,6 +171,24 @@ ALTER TABLE `user_role`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `guru`
+--
+ALTER TABLE `guru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kelas`
+--
+ALTER TABLE `kelas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `mapel`
+--
+ALTER TABLE `mapel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
