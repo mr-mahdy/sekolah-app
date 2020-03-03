@@ -36,8 +36,9 @@ class Mapel extends CI_Controller
                 'required' => 'field kode mapel harus diisi',
                 'is_unique' => 'kode mapel sudah ada'
             ]);
-            $this->form_validation->set_rules('namaMapel', 'Nama Mapel', 'required|trim', [
-                'required' => 'field nama mapel harus diisi'
+            $this->form_validation->set_rules('namaMapel', 'Nama Mapel', 'required|trim|is_unique[mapel.nama_mapel]', [
+                'required' => 'field nama mapel harus diisi',
+                'is_unique' => 'nama mapel sudah ada'
             ]);
             $this->form_validation->set_rules('kkm', 'KKM', 'required|trim|numeric|max_length[3]', [
                 'required' => 'field kkm harus diisi',

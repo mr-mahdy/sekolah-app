@@ -98,25 +98,25 @@
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./index3.html" class="nav-link">
+                             <a href="<?= base_url('walikelas/index'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Wali Kelas</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="<?= base_url('admin/loadSiswa'); ?>" class="nav-link">
+                             <a href="<?= base_url('siswa/index'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Siswa</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./index3.html" class="nav-link">
+                             <a href="<?= base_url('jadwal/index'); ?>./index3.html" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Jadwal</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./index3.html" class="nav-link">
+                             <a href="<?= base_url('pembina/index'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Pembina</p>
                              </a>
@@ -133,13 +133,13 @@
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="./index.html" class="nav-link">
+                             <a href="<?= base_url('presensi/kelas'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Kelas</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./index2.html" class="nav-link">
+                             <a href="<?= base_url('presensi/ekskul'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Ekskul</p>
                              </a>
@@ -156,13 +156,13 @@
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="./index.html" class="nav-link">
+                             <a href="<?= base_url('nilai/kelas'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Kelas</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./index2.html" class="nav-link">
+                             <a href="<?= base_url('nilai/ekskul'); ?>" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Ekskul</p>
                              </a>
@@ -170,7 +170,7 @@
                      </ul>
                  </li>
                  <li class="nav-item has-treeview">
-                     <a href="#" class="nav-link">
+                     <a href="<?= base_url('usulan/index'); ?>" class="nav-link">
                          <i class="nav-icon fas fa-lightbulb"></i>
                          <p>
                              Usulan Sarana
@@ -178,7 +178,7 @@
                      </a>
                  </li>
                  <li class="nav-item has-treeview">
-                     <a href="#" class="nav-link">
+                     <a href="<?= base_url('soal/index'); ?>" class="nav-link">
                          <i class="nav-icon fas fa-book"></i>
                          <p>
                              Bank Soal

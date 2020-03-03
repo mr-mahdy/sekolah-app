@@ -25,7 +25,7 @@
                 <?= $this->session->flashdata('messageBerhasil'); ?>
 
                 <form action="<?= base_url('kelas/editKelas'); ?>" method="post">
-                    <input type="hidden" name="id" value="<?= set_value('id', $kelas['id']) ?>">
+                    <input type="hidden" name="id" value="<?= $kelas['id'] ?>">
                     <div class="form-group">
                         <label for="namaKelas">Nama Kelas</label>
                         <input type="text" name="namaKelas" value="<?= set_value('namaKelas', $kelas['nama_kelas']) ?>" class="form-control" id="nama">

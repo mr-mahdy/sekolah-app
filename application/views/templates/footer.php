@@ -47,7 +47,10 @@
 <script>
     <?php if ($this->session->flashdata('message')) : ?>
         $('#mapelModal').modal('show');
+        $('#guruModal').modal('show');
         $('#kelasModal').modal('show');
+        $('#walikelasModal').modal('show');
+        $('#siswaModal').modal('show');
     <?php endif; ?>
 </script>
 </body>

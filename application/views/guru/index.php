@@ -49,17 +49,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($allGuru as $guru) : ?>
-                            <tr>
-                                <td><?= $guru['nuptk']; ?></td>
-                                <td><?= $guru['nama_guru']; ?></td>
-                                <td><?= $guru['nama_mapel']; ?></td>
-                                <td>
-                                    <a href="<?= base_url() . 'guru/ubahGuru/' . $guru['id'] ?>" class="fas fa-edit" title="ubah"></a>
-                                    <a href=" <?= base_url() . 'guru/hapusGuru/' . $guru['id'] ?>" class="fas fa-trash" title="hapus" onclick="return confirm('yakin ingin menghapus?')"></a>
-                                </td>
-                            </tr>
+                        <?php foreach ($allGuruMaster as $guruMaster) :  ?>
+                            <?php $mapel = "";
+                            $nuptk = "";
+                            foreach ($allGuru as $guru) : ?>
+                                <?php if ($guru['id_guru'] == $guruMaster['id']) : ?>
+                                    <?php $nuptk = $guru['nuptk']; ?>
+                                    <?php $mapel = $mapel . $guru['nama_mapel'] . "<br>"; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ($nuptk != "") : ?>
+                                <tr>
+                                    <td><?= $guruMaster['nuptk']; ?></td>
+                                    <td><?= $guruMaster['nama_guru']; ?></td>
+                                    <td><?= $mapel ?></td>
+                                    <td>
+                                        <a href="<?= base_url() . 'guru/ubahGuru/' . $guruMaster['id'] ?>" class="fas fa-edit" title="ubah"></a>
+                                        <a href=" <?= base_url() . 'guru/hapusGuru/' . $guruMaster['id'] ?>" class="fas fa-trash" title="hapus" onclick="return confirm('yakin ingin menghapus?')"></a>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
@@ -92,13 +103,25 @@
                         <?= $this->session->flashdata('namaGuru'); ?>
                     </div>
                     <div class="form-group">
-                        <label for="mapel">Mata Pelajaran</label>
-                        <select name="mapel" id="mapel" class="form-control">
-                            <?php foreach ($allMapel as $mapel) : ?>
-                                <option value="<?= $mapel['id'] ?>"><?= $mapel['nama_mapel'] ?></option>
+                        <label for="mapel1">Mata Pelajaran</label>
+                        <select name="mapel1" id="mapel1" class="form-control">
+                            <?php foreach ($allMapel as $mapelpilih) : ?>
+                                <option value="<?= $mapelpilih['id'] ?>"><?= $mapelpilih['nama_mapel'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <?= $this->session->flashdata('mapel'); ?>
+                        <select name="mapel2" id="mapel2" class="form-control mt-2">
+                            <option value="">Pilih Mata Pelajaran</option>
+                            <?php foreach ($allMapel as $mapelpilih) : ?>
+                                <option value="<?= $mapelpilih['id'] ?>"><?= $mapelpilih['nama_mapel'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <select name="mapel3" id="mapel3" class="form-control mt-2">
+                            <option value="">Pilih Mata Pelajaran</option>
+                            <?php foreach ($allMapel as $mapelpilih) : ?>
+                                <option value="<?= $mapelpilih['id'] ?>"><?= $mapelpilih['nama_mapel'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?= $this->session->flashdata('mapel1'); ?>
                     </div>
             </div>
             <div class="modal-footer">

@@ -32,8 +32,9 @@ class Kelas extends CI_Controller
     public function createKelas()
     {
         if ($this->session->userdata('role_id') == 1) {
-            $this->form_validation->set_rules('namaKelas', 'Nama Kelas', 'required|trim', [
-                'required' => 'field nama kelas harus diisi'
+            $this->form_validation->set_rules('namaKelas', 'Nama Kelas', 'required|trim|is_unique[kelas.nama_kelas]', [
+                'required' => 'field nama kelas harus diisi',
+                'is_unique' => 'nama kelas sudah ada'
             ]);
             $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|trim|numeric|max_length[2]', [
                 'required' => 'field jumlah harus diisi',

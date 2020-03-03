@@ -1,14 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Guru extends CI_Controller
+class Walikelas extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('Guru_model');
-        $this->load->model('Mapel_model');
+        $this->load->model('Kelas_model');
+        $this->load->model('Walikelas_model');
     }
 
     public function index()
@@ -18,56 +19,61 @@ class Guru extends CI_Controller
             if ($this->input->get('keyword')) {
                 $keyword = $this->input->get('keyword');
             }
-            $data['judul'] = 'Sekolah App | Daftar Guru';
+            $data['judul'] = 'Sekolah App | Daftar Wali Kelas';
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('user')])->row_array();
-            $data['allGuruMaster'] =  $this->Guru_model->getAllGuruMaster();
-            $data['allGuru'] = $this->Guru_model->getAllGuru($keyword);
-            $data['allMapel'] = $this->Mapel_model->getAllMapel($keyword);
+            $data['allWalikelas'] = $this->Walikelas_model->getAllWalikelas($keyword);
+            $data['allKelas'] = $this->Kelas_model->getAllKelas($keyword);
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('guru/index', $data);
+            $this->load->view('walikelas/index', $data);
             $this->load->view('templates/footer');
         } else {
             redirect('auth');
         }
     }
 
-    public function createGuru()
+    public function createWalikelas()
     {
         if ($this->session->userdata('role_id') == 1) {
-            $this->form_validation->set_rules('nuptk', 'NUPTK', 'required|trim|is_unique[guru.nuptk]', [
-                'required' => 'field nuptk harus diisi',
-                'is_unique' => 'nuptk sudah ada'
+            $allGuru = $this->Guru_model->getAllGuruMaster();
+            $list = "";
+            $i = 1;
+            foreach ($allGuru as $guru) {
+                if ($i == count($allGuru)) {
+                    $list .= $guru['nuptk'];
+                } else {
+                    $list .= $guru['nuptk'] . ",";
+                }
+                $i++;
+            }
+            $this->form_validation->set_rules('guru', 'guru', "required|is_unique[walikelas.nuptk_guru]|in_list[$list]", [
+                'required' => 'field guru harus diisi',
+                'is_unique' => 'nuptk guru sudah terdaftar menjadi wali kelas',
+                'in_list' => 'nuptk guru tidak ada'
             ]);
-            $this->form_validation->set_rules('namaGuru', 'Nama Guru', 'required|trim|is_unique[guru.nama_guru]', [
-                'required' => 'field nama guru harus diisi',
-                'is_unique' => 'nama guru sudah ada'
+            $this->form_validation->set_rules('kelas', 'kelas', 'required|trim', [
+                'required' => 'field kelas harus diisi'
             ]);
-            $this->form_validation->set_rules('mapel1', 'Mata Pelajaran', 'required|trim', [
-                'required' => 'field mata pelajaran harus diisi'
-            ]);
-
 
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Data kelas gagal <strong>ditambahkan</strong>
+                Data wali kelas gagal <strong>ditambahkan</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>');
-                $this->session->set_flashdata('nuptk', form_error('nuptk', ' <small class="text-danger">', '    </small>'));
-                $this->session->set_flashdata('namaGuru', form_error('namaGuru', ' <small class="text-danger">', '    </small>'));
-                $this->session->set_flashdata('mapel1', form_error('mapel1', ' <small class="text-danger">', '    </small>'));
-                redirect('guru/index');
+                $this->session->set_flashdata('guru', form_error('guru', ' <small class="text-danger">', '    </small>'));
+                $this->session->set_flashdata('kelas', form_error('kelas', ' <small class="text-danger">', '    </small>'));
+                redirect('walikelas/index');
             } else {
-                if ($this->Guru_model->insertGuru() > 0) {
+                if ($this->Walikelas_model->insertWalikelas() > 0) {
                     $this->session->set_flashdata('messageBerhasil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data guru berhasil <strong>ditambahkan</strong>
+                    Data wali kelas berhasil <strong>ditambahkan</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>');
-                    redirect('guru');
+                    redirect('walikelas');
                 }
             }
         } else {
@@ -75,68 +81,75 @@ class Guru extends CI_Controller
         }
     }
 
-    public function hapusGuru($id)
+    public function hapusWalikelas($id)
     {
         if ($this->session->userdata('role_id') == 1) {
-            $this->Guru_model->hapusGuru($id);
+            $this->Walikelas_model->hapusWalikelas($id);
             $this->session->set_flashdata('messageBerhasil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data guru berhasil <strong>dihapus</strong>
+                    Data wali kelas berhasil <strong>dihapus</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>');
-            redirect('guru');
+            redirect('walikelas');
         } else {
             redirect('auth');
         }
     }
 
-    public function ubahGuru($id)
+    public function ubahWalikelas($id)
     {
         if ($this->session->userdata('role_id') == 1) {
             $keyword = "";
-            $data['judul'] = 'Sekolah App | Ubah Guru';
+            $data['judul'] = 'Sekolah App | Ubah Wali Kelas';
             $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('user')])->row_array();
-            $data['allGuru'] = $this->Guru_model->getGuruById($id);
-            $data['guruMaster'] = $this->Guru_model->getGuruMasterById($id);
-            $data['allMapel'] = $this->Mapel_model->getAllMapel($keyword);
+            $data['walikelas'] = $this->Walikelas_model->getWalikelasById($id);
+            $data['allKelas'] = $this->Kelas_model->getAllKelas($keyword);
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
-            $this->load->view('guru/ubah', $data);
+            $this->load->view('walikelas/ubah', $data);
             $this->load->view('templates/footer');
         } else {
             redirect('auth');
         }
     }
 
-    public function editGuru()
+    public function editWalikelas()
     {
         if ($this->session->userdata('role_id') == 1) {
-            $this->form_validation->set_rules('nuptk', 'NUPTK', 'required', [
-                'required' => 'field nuptk harus diisi'
+            $allGuru = $this->Guru_model->getAllGuruMaster();
+            $list = "";
+            $i = 1;
+            foreach ($allGuru as $guru) {
+                if ($i == count($allGuru)) {
+                    $list .= $guru['nuptk'];
+                } else {
+                    $list .= $guru['nuptk'] . ",";
+                }
+                $i++;
+            }
+            $this->form_validation->set_rules('nuptk', 'nuptk', "required|in_list[$list]", [
+                'required' => 'field nuptk guru harus diisi',
+                'in_list' => 'nuptk guru tidak ada'
             ]);
-            $this->form_validation->set_rules('namaGuru', 'Nama Guru', 'required', [
-                'required' => 'field nama guru harus diisi'
-            ]);
-            $this->form_validation->set_rules('mapel1', 'Mata Pelajaran', 'required', [
-                'required' => 'field mata pelajaran harus diisi'
+            $this->form_validation->set_rules('kelas', 'kelas', 'required|trim', [
+                'required' => 'field kelas harus diisi'
             ]);
 
             $id = $this->input->post('id');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('nuptk', form_error('nuptk', ' <small class="text-danger">', '    </small>'));
-                $this->session->set_flashdata('namaGuru', form_error('namaGuru', ' <small class="text-danger">', '    </small>'));
-                $this->session->set_flashdata('mapel1', form_error('mapel1', ' <small class="text-danger">', '    </small>'));
-                redirect('guru/ubahGuru/' . $id);
+                $this->session->set_flashdata('kelas', form_error('kelas', ' <small class="text-danger">', '    </small>'));
+                redirect('walikelas/ubahWalikelas/' . $id);
             } else {
-                $this->Guru_model->editGuru($id);
+                $this->Walikelas_model->editWalikelas($id);
                 $this->session->set_flashdata('messageBerhasil', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data guru berhasil <strong>diubah</strong>
+                    Data wali kelas berhasil <strong>diubah</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>');
-                redirect('guru');
+                redirect('walikelas');
             }
         } else {
             redirect('auth');
